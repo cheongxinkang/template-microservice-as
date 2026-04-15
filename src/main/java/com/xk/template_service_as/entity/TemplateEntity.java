@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,5 +22,11 @@ public class TemplateEntity {
 
     @Convert(converter = FieldConverter.class)
     private List<Field> fields = new ArrayList<>();
+
+    @Column @GeneratedValue
+    private Date createdAt;
+
+    @Column
+    private Date modifiedAt;
 
 }
