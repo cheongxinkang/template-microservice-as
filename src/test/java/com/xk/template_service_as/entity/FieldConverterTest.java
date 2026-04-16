@@ -31,14 +31,14 @@ public class FieldConverterTest {
         Assertions.assertEquals(createSampleFields(), fieldsList);
     }
 
-    private List<Field> createSampleFields() {
+    public static List<Field> createSampleFields() {
         List<Field> fieldsList = new ArrayList<>();
         fieldsList.add(new TextField("stayGold", "Do you know Stay Gold?"));
         fieldsList.add(new TextField("inTheEnd", "Do you know Linkin Park?"));
         return fieldsList;
     }
 
-    private String sampleFieldsJson() {
+    public static String sampleFieldsJson() {
         return "[{\"fieldName\":\"stayGold\",\"inputData\":\"\",\"prompt\":\"Do you know Stay Gold?\",\"type\":\"TEXT\"},{\"fieldName\":\"inTheEnd\",\"inputData\":\"\",\"prompt\":\"Do you know Linkin Park?\",\"type\":\"TEXT\"}]";
     }
 
