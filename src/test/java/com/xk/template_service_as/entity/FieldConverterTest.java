@@ -39,7 +39,7 @@ public class FieldConverterTest {
     }
 
     private String sampleFieldsJson() {
-        return "[{\"fieldName\":\"stayGold\",\"prompt\":\"Do you know Stay Gold?\",\"inputData\":\"\",\"type\":\"TEXT\"},{\"fieldName\":\"inTheEnd\",\"prompt\":\"Do you know Linkin Park?\",\"inputData\":\"\",\"type\":\"TEXT\"}]";
+        return "[{\"fieldName\":\"stayGold\",\"inputData\":\"\",\"prompt\":\"Do you know Stay Gold?\",\"type\":\"TEXT\"},{\"fieldName\":\"inTheEnd\",\"inputData\":\"\",\"prompt\":\"Do you know Linkin Park?\",\"type\":\"TEXT\"}]";
     }
 
 }
