@@ -23,10 +23,13 @@ public class TemplateEntity {
     @Convert(converter = FieldConverter.class)
     private List<Field> fields = new ArrayList<>();
 
-    @Column @GeneratedValue
+    @Column
     private Date createdAt;
 
     @Column
     private Date modifiedAt;
+
+    @Column
+    private TemplateType type;
 
 }

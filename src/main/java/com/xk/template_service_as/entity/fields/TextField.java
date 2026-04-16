@@ -19,4 +19,10 @@ public class TextField extends Field {
         this.inputData = "";
     }
 
+    public TextField(String fieldName, String prompt, String inputData) {
+        super(fieldName, FieldType.TEXT);
+        this.prompt = prompt;
+        this.inputData = inputData;
+    }
+
 }
