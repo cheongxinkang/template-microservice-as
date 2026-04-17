@@ -53,7 +53,6 @@ public class TemplateControllerTest {
 
     private TemplateDTO createBlankTemplate() {
         return TemplateDTO.builder()
-            .id(UUID.randomUUID())
             .templateName("Test Template")
             .type(TemplateType.FORM.toString())
             .fields(FieldConverterTest.sampleFieldsJson())
