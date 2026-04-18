@@ -1,11 +1,16 @@
 package com.xk.template_service_as.dto;
 
+import com.xk.template_service_as.entity.Field;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.PastOrPresent;
 import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Builder
@@ -19,7 +24,7 @@ public record TemplateDTO(
     String type,
 
     @NotEmpty(message = "An empty template is useless.")
-    String fields,
+    List<Field> fields,
 
     @PastOrPresent
     Date createdAt,

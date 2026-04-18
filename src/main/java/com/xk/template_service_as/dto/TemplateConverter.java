@@ -20,7 +20,7 @@ public class TemplateConverter {
             .id(dto.id())
             .templateName(dto.templateName())
             .type(TemplateType.valueOf(dto.type()))
-            .fields(fieldConverter.convertToEntityAttribute(dto.fields()))
+            .fields(dto.fields())
             .createdAt(dto.createdAt())
             .modifiedAt(dto.modifiedAt())
             .build();
@@ -31,7 +31,7 @@ public class TemplateConverter {
             .id(entity.getId())
             .templateName(entity.getTemplateName())
             .type(entity.getType().toString())
-            .fields(fieldConverter.convertToDatabaseColumn(entity.getFields()))
+            .fields(entity.getFields())
             .createdAt(entity.getCreatedAt())
             .modifiedAt(entity.getModifiedAt())
             .build();
