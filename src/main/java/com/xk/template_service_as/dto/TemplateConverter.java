@@ -17,12 +17,12 @@ public class TemplateConverter {
 
     public Template toEntity(TemplateDTO dto) {
         return Template.builder()
-            .id(dto.id())
-            .templateName(dto.templateName())
-            .type(TemplateType.valueOf(dto.type()))
-            .fields(dto.fields())
-            .createdAt(dto.createdAt())
-            .modifiedAt(dto.modifiedAt())
+            .id(dto.getId())
+            .templateName(dto.getTemplateName())
+            .type(dto.getType())
+            .fields(dto.getFields())
+            .createdAt(dto.getCreatedAt())
+            .modifiedAt(dto.getModifiedAt())
             .build();
     }
 
@@ -30,7 +30,7 @@ public class TemplateConverter {
         return TemplateDTO.builder()
             .id(entity.getId())
             .templateName(entity.getTemplateName())
-            .type(entity.getType().toString())
+            .type(entity.getType())
             .fields(entity.getFields())
             .createdAt(entity.getCreatedAt())
             .modifiedAt(entity.getModifiedAt())

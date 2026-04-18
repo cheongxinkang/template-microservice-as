@@ -1,5 +1,8 @@
 package com.xk.template_service_as.entity;
 
+import lombok.Getter;
+
+@Getter
 public enum TemplateType {
     FORM("FORM");
 
@@ -22,10 +25,6 @@ public enum TemplateType {
 
     private TemplateType(final String name) {
         this.name = name;
-    }
-
-    public String getName() {
-        return this.name;
     }
 
     @Override

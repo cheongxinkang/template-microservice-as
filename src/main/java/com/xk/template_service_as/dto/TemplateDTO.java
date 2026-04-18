@@ -1,34 +1,36 @@
 package com.xk.template_service_as.dto;
 
 import com.xk.template_service_as.entity.Field;
+import com.xk.template_service_as.entity.TemplateType;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.PastOrPresent;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 @Builder
-public record TemplateDTO(
-    UUID id,
+@Data
+public class TemplateDTO {
 
-    @NotEmpty(message = "Template needs to be named.")
-    String templateName,
+    private UUID id;
 
-    @NotEmpty(message = "Template needs to be typed.")
-    String type,
+//    @NotEmpty(message = "Template needs to be named.")
+    private String templateName;
 
-    @NotEmpty(message = "An empty template is useless.")
-    List<Field> fields,
+//    @NotEmpty(message = "Template needs to be typed.")
+    private TemplateType type;
+
+//    @NotEmpty(message = "An empty template is useless.")
+    private List<Field> fields;
 
     @PastOrPresent
-    Date createdAt,
+    private Date createdAt;
 
     @FutureOrPresent
-    Date modifiedAt
-) { }
+    private Date modifiedAt;
+
+}
+

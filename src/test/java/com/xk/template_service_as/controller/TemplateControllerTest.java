@@ -18,8 +18,9 @@ import java.time.temporal.TemporalAmount;
 import java.util.Date;
 import java.util.UUID;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 public class TemplateControllerTest {
@@ -33,32 +34,31 @@ public class TemplateControllerTest {
         this.objectMapper = objectMapper;
     }
 
-    private TemplateDTO blankTemplate;
     private MockMvc mockMvc;
 
     @BeforeEach
     void setUp() throws Exception {
         mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
-        blankTemplate = createBlankTemplate();
     }
 
     @Test
-    void testCreateTemplate() throws Exception {
-        mockMvc.perform(
-            post("/templates/create")
-                .contentType("application/json")
-                .content(objectMapper.writeValueAsString(blankTemplate)))
-            .andExpect(status().isCreated());
+    void testGetCreateForm() throws Exception {
+        mockMvc.perform(get("/templates/create"))
+            .andExpect(status().isOk())
+            .andExpect(model().attributeExists("templateDTO"))
+            .andExpect(view().name("home"));
     }
 
-    private TemplateDTO createBlankTemplate() {
-        return TemplateDTO.builder()
-            .templateName("Test Template")
-            .type(TemplateType.FORM.toString())
-            .fields(FieldConverterTest.sampleFieldsJson())
-            .createdAt(Date.from(Instant.now()))
-            .modifiedAt(Date.from(Instant.now().plus(Period.ofDays(2))))
-            .build();
+    @Test
+    void testCreateFormSuccess() throws Exception {
+        mockMvc.perform(
+                post("/templates/create")
+                    .param("templateName", "Test Template")
+                    .param("type", String.valueOf(TemplateType.FORM))
+                    .param("fields", String.valueOf(FieldConverterTest.createSampleFields()))
+                    .param("createdAt", String.valueOf(Date.from(Instant.now())))
+                    .param("modifiedAt", String.valueOf(Date.from(Instant.now()))))
+            .andExpect(status().is3xxRedirection());
     }
 
 }
