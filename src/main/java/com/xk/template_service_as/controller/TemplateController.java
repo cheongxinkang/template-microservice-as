@@ -1,7 +1,10 @@
 package com.xk.template_service_as.controller;
 
 import com.xk.template_service_as.dto.TemplateDTO;
+import com.xk.template_service_as.entity.TemplateType;
+import com.xk.template_service_as.entity.fields.TextField;
 import com.xk.template_service_as.service.TemplateService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +19,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -26,6 +31,11 @@ public class TemplateController {
     private static final String TEMPLATE_FORM = "home";
 
     TemplateService templateService;
+
+    @ModelAttribute("allTypes")
+    public List<TemplateType> populateTypes() {
+        return Arrays.asList(TemplateType.ALL);
+    }
 
     public TemplateController(
         @Qualifier("v1TemplateService") TemplateService templateService) {
@@ -59,6 +69,19 @@ public class TemplateController {
         // save to repository
         redirectAttributes.addFlashAttribute("message", "New Template created.");
         return "redirect:/templates/" + templateDTO.getId();
+    }
+
+    @RequestMapping(value="/create", params={"addTextField"})
+    public String addTextField(TemplateDTO templateDTO, BindingResult result) {
+        templateDTO.getFields().add(new TextField());
+        return TEMPLATE_FORM;
+    }
+
+    @RequestMapping(value="/create", params={"removeField"})
+    public String removeField(TemplateDTO templateDTO, BindingResult result, HttpServletRequest req) {
+        Integer fieldId = Integer.valueOf(req.getParameter("removeField"));
+        templateDTO.getFields().remove(fieldId.intValue());
+        return TEMPLATE_FORM;
     }
 
 }

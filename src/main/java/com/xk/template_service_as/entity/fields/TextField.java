@@ -26,6 +26,10 @@ public class TextField extends Field {
         this.inputData = inputData;
     }
 
+    public TextField() {
+        super("", FieldType.TEXT);
+    }
+
     @Override
     public String toString() {
         final ObjectMapper mapper = new ObjectMapper();

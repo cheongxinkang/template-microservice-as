@@ -14,7 +14,7 @@
 
     <img src="../static/images/aslogo.png" alt="AS logo" title="AS logo"
          th:src="@{/images/aslogo.png}" th:alt-title="#{title.application}"
-         width="378" height="80" />
+         width="378" height="80"/>
 
 </div>
 
@@ -36,22 +36,24 @@
                 <label for="templateName">
                     <span th:text="#{template.templateName}">Template Name</span>
                 </label>
-                <input type="text" th:field="*{templateName}" th:errorclass="fieldError" />
+                <input type="text" th:field="*{templateName}" th:errorclass="fieldError"/>
             </div>
             <div>
                 <label th:text="#{template.types}">Type of Template</label>
                 <ul>
                     <li th:each="type : ${allTypes}">
-                        <input type="radio" th:field="*{type}" th:value="${type}" />
+                        <input type="radio" th:field="*{type}" th:value="${type}"/>
                         <label th:for="${#ids.prev('type')}" th:text="#{${'template.types.' + type}}">Form</label>
                     </li>
                 </ul>
             </div>
             <div>
                 <label th:text="#{template.fields}">Template Fields</label>
-                <div>
+                <ul th:each="field, fieldStat: *{fields}">
 
-                </div>
+                    <input type="text" th:field="*{fields[__${fieldStat.index}__].prompt}" th:errorclass="fieldError"/>
+                </ul>
+                <button type="submit" name="addTextField" th:text="#{template.fields.add}">Add Text Field</button>
             </div>
 
             <div class="submit">
