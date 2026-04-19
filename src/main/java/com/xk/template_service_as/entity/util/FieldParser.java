@@ -1,30 +1,25 @@
-package com.xk.template_service_as.entity;
+package com.xk.template_service_as.entity.util;
 
+import com.xk.template_service_as.entity.Field;
+import com.xk.template_service_as.entity.FieldType;
 import com.xk.template_service_as.entity.fields.TextField;
-import jakarta.persistence.AttributeConverter;
-import jakarta.persistence.Converter;
+import org.springframework.stereotype.Component;
 import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.ObjectMapper;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Converter
-public class FieldConverter implements AttributeConverter<List<Field>, String> {
+@Component
+public class FieldParser {
 
-    private final ObjectMapper objectMapper;
+    private ObjectMapper objectMapper;
 
-    public FieldConverter(ObjectMapper objectMapper) {
+    public FieldParser(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
     }
 
-    @Override
-    public String convertToDatabaseColumn(List<Field> fields) {
-        return objectMapper.writeValueAsString(fields);
-    }
-
-    @Override
-    public List<Field> convertToEntityAttribute(String s) {
+    public List<Field> parseStringToListField(String s) {
         List<Field> fieldsList = new ArrayList<>();
         JsonNode root =  objectMapper.readTree(s);
 
@@ -40,7 +35,7 @@ public class FieldConverter implements AttributeConverter<List<Field>, String> {
         FieldType type = FieldType.valueOf(field.get("type").stringValue());
 
         switch (type) {
-            case type.TEXT:
+            case TEXT:
                 return new TextField(
                     field.get("fieldName").stringValue(),
                     field.get("prompt").stringValue(),
@@ -49,4 +44,5 @@ public class FieldConverter implements AttributeConverter<List<Field>, String> {
 
         return null;
     }
+
 }

@@ -3,6 +3,7 @@ package com.xk.template_service_as.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import tools.jackson.databind.ObjectMapper;
 
 @Data
 @AllArgsConstructor

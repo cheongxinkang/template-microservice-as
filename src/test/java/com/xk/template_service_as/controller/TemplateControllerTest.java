@@ -1,7 +1,8 @@
 package com.xk.template_service_as.controller;
 
-import com.xk.template_service_as.dto.TemplateDTO;
-import com.xk.template_service_as.entity.FieldConverterTest;
+import com.xk.template_service_as.entity.Field;
+import com.xk.template_service_as.entity.FieldToStringConverter;
+import com.xk.template_service_as.entity.FieldToStringConverterTest;
 import com.xk.template_service_as.entity.TemplateType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,11 +13,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import tools.jackson.databind.ObjectMapper;
 
-import java.time.Instant;
-import java.time.Period;
-import java.time.temporal.TemporalAmount;
-import java.util.Date;
-import java.util.UUID;
+import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -55,10 +52,13 @@ public class TemplateControllerTest {
                 post("/templates/create")
                     .param("templateName", "Test Template")
                     .param("type", String.valueOf(TemplateType.FORM))
-                    .param("fields", String.valueOf(FieldConverterTest.createSampleFields()))
-                    .param("createdAt", String.valueOf(Date.from(Instant.now())))
-                    .param("modifiedAt", String.valueOf(Date.from(Instant.now()))))
+                    .param("fields", fields()))
             .andExpect(status().is3xxRedirection());
+    }
+
+    private String fields() {
+        List<Field> fields = FieldToStringConverterTest.createSampleFields();
+        return fields.toString();
     }
 
 }

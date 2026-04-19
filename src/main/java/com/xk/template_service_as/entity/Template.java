@@ -6,8 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,13 +27,13 @@ public class Template {
     @Column
     private TemplateType type;
 
-    @Convert(converter = FieldConverter.class)
+    @Convert(converter = FieldToStringConverter.class)
     private List<Field> fields;
 
     @Column
-    private Date createdAt;
+    private LocalDateTime createdAt;
 
     @Column
-    private Date modifiedAt;
+    private LocalDateTime modifiedAt;
 
 }

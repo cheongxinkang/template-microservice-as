@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
@@ -14,6 +15,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/templates")
@@ -31,12 +34,14 @@ public class TemplateController {
 
     @InitBinder
     public void setAllowedFields(WebDataBinder dataBinder) {
-        dataBinder.setDisallowedFields("id");
+        dataBinder.setDisallowedFields("id", "createdAt", "modifiedAt");
     }
 
     @ModelAttribute("templateDTO")
     public TemplateDTO createBlankTemplate() {
-        return TemplateDTO.builder().build();
+        return TemplateDTO.builder()
+            .fields(new ArrayList<>())
+            .build();
     }
 
     @GetMapping("/create")
@@ -45,8 +50,7 @@ public class TemplateController {
     }
 
     @PostMapping("/create")
-    public String createTemplate(@Valid TemplateDTO templateDTO, BindingResult result,
-                                 RedirectAttributes redirectAttributes) {
+    public String createTemplate(@Valid TemplateDTO templateDTO, BindingResult result, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute("error", "There was an error in creating the template.");
             return TEMPLATE_FORM;
