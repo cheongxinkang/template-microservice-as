@@ -3,6 +3,7 @@ package com.xk.template_service_as.service;
 import com.xk.template_service_as.dto.TemplateConverter;
 import com.xk.template_service_as.dto.TemplateDTO;
 import com.xk.template_service_as.entity.Template;
+import com.xk.template_service_as.entity.fields.TextField;
 import com.xk.template_service_as.repository.TemplateRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,12 @@ public class TemplateServiceImpl implements TemplateService {
     public TemplateDTO createTemplate(@RequestBody TemplateDTO templateDTO) {
         Template savedTemplate = templateRepository.save(templateConverter.toEntity(templateDTO));
         return templateConverter.toDTO(savedTemplate);
+    }
+
+    @Override
+    public void addTextField(@RequestBody TemplateDTO templateDTO) {
+        templateDTO.getFields().add(new TextField());
+        templateDTO.getFields().add(new TextField());
     }
 
 }

@@ -73,7 +73,7 @@ public class TemplateController {
 
     @RequestMapping(value="/create", params={"addTextField"})
     public String addTextField(TemplateDTO templateDTO, BindingResult result) {
-        templateDTO.getFields().add(new TextField());
+        templateService.addTextField(templateDTO);
         return TEMPLATE_FORM;
     }
 

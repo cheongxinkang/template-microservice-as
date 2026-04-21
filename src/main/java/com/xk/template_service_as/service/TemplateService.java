@@ -6,4 +6,6 @@ public interface TemplateService {
 
     TemplateDTO createTemplate(TemplateDTO templateDTO);
 
+    void addTextField(TemplateDTO templateDTO);
+
 }
