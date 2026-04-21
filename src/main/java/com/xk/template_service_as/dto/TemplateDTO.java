@@ -24,7 +24,7 @@ public class TemplateDTO {
     private TemplateType type;
 
 //    @NotEmpty(message = "An empty template is useless.")
-    private List<Field> fields;
+    private List<FieldDTO> fields;
 
     @PastOrPresent
     private LocalDateTime createdAt;

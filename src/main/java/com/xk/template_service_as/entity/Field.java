@@ -1,5 +1,6 @@
 package com.xk.template_service_as.entity;
 
+import com.xk.template_service_as.dto.FieldDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,5 +16,7 @@ public abstract class Field {
     protected String fieldName;
 
     protected FieldType type;
+
+    public abstract FieldDTO toDTO();
 
 }

@@ -1,7 +1,9 @@
 package com.xk.template_service_as.service;
 
+import com.xk.template_service_as.dto.FieldDTO;
 import com.xk.template_service_as.dto.TemplateConverter;
 import com.xk.template_service_as.dto.TemplateDTO;
+import com.xk.template_service_as.entity.FieldType;
 import com.xk.template_service_as.entity.Template;
 import com.xk.template_service_as.entity.fields.TextField;
 import com.xk.template_service_as.repository.TemplateRepository;
@@ -16,7 +18,7 @@ public class TemplateServiceImpl implements TemplateService {
     private final TemplateRepository templateRepository;
     private final TemplateConverter templateConverter;
 
-    public  TemplateServiceImpl(TemplateRepository templateRepository, TemplateConverter templateConverter) {
+    public TemplateServiceImpl(TemplateRepository templateRepository, TemplateConverter templateConverter) {
         this.templateRepository = templateRepository;
         this.templateConverter = templateConverter;
     }
@@ -29,8 +31,11 @@ public class TemplateServiceImpl implements TemplateService {
 
     @Override
     public void addTextField(@RequestBody TemplateDTO templateDTO) {
-        templateDTO.getFields().add(new TextField());
-        templateDTO.getFields().add(new TextField());
+        templateDTO.getFields().add(
+            FieldDTO.builder()
+                .type(FieldType.TEXT.toString())
+                .build()
+        );
     }
 
 }

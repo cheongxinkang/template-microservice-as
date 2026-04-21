@@ -1,5 +1,6 @@
 package com.xk.template_service_as.entity.fields;
 
+import com.xk.template_service_as.dto.FieldDTO;
 import com.xk.template_service_as.entity.Field;
 import com.xk.template_service_as.entity.FieldType;
 import lombok.Data;
@@ -36,4 +37,12 @@ public class TextField extends Field {
         return mapper.writeValueAsString(this);
     }
 
+    @Override
+    public FieldDTO toDTO() {
+        return FieldDTO.builder()
+            .label(this.label)
+            .type(this.type.toString())
+            .textValue(this.prompt)
+            .build();
+    }
 }
