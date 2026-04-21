@@ -48,11 +48,9 @@
                 </ul>
             </div>
             <div>
-                <label th:text="#{template.fields}">Template Fields</label>
-                <ul th:each="field, fieldStat: *{fields}">
-
-                    <input type="text" th:field="*{fields[__${fieldStat.index}__].prompt}" th:errorclass="fieldError"/>
-                </ul>
+                <div th:each="field, stat : *{fields}">
+                    <div th:replace="~{fragments/fields :: ${field.type}(field=${field}, index=${stat.index})}"></div>
+                </div>
                 <button type="submit" name="addTextField" th:text="#{template.fields.add}">Add Text Field</button>
             </div>
 

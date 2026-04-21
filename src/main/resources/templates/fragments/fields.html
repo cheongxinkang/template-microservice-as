@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+
+<html xmlns:th="https://www.thymeleaf.org">
+
+<body>
+
+<div th:fragment="TEXT(field, index)">
+    <label th:text="${field.label}"></label>
+    <input type="text" th:field="*{fields[__${index}__].prompt}" />
+    <input type="hidden" th:field="*{fields[__${index}__].type}" value = "TEXT" />
+</div>
+
+<!--<div th:fragment="NUMBER(field, index)">-->
+<!--    <label th:text="${field.label}"></label>-->
+<!--    <input type="number" th:field="*{fields[__${index}__].numberValue}" />-->
+<!--    <input type="hidden" th:field="*{fields[__${index}__].type}" value="TEXT" />-->
+<!--</div>-->
+
+</body>
+
+</html>

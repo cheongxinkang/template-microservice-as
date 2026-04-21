@@ -15,19 +15,19 @@ public class TextField extends Field {
     String inputData;
 
     public TextField(String fieldName, String prompt) {
-        super(fieldName, FieldType.TEXT);
+        super("label", fieldName, FieldType.TEXT);
         this.prompt = prompt;
         this.inputData = "";
     }
 
     public TextField(String fieldName, String prompt, String inputData) {
-        super(fieldName, FieldType.TEXT);
+        super("label", fieldName, FieldType.TEXT);
         this.prompt = prompt;
         this.inputData = inputData;
     }
 
     public TextField() {
-        super("", FieldType.TEXT);
+        super("label","", FieldType.TEXT);
     }
 
     @Override
