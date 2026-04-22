@@ -3,6 +3,7 @@ package com.xk.template_service_as.dto;
 import com.xk.template_service_as.entity.Field;
 import com.xk.template_service_as.entity.fields.TextField;
 import lombok.*;
+import tools.jackson.databind.ObjectMapper;
 
 @Builder
 @Getter
@@ -19,10 +20,14 @@ public class FieldDTO {
     public Field toEntity() {
         if ("TEXT".equalsIgnoreCase(type)) {
             return new TextField(label, textValue);
-        } else if ("NUMBER".equalsIgnoreCase(type)) {
-//            return new NumberField(label, numberValue);
         }
         throw new IllegalArgumentException("Unknown field type: " + type);
+    }
+
+    @Override
+    public String toString() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(this);
     }
 
 }

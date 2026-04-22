@@ -1,5 +1,6 @@
 package com.xk.template_service_as.controller;
 
+import com.xk.template_service_as.dto.FieldDTO;
 import com.xk.template_service_as.entity.Field;
 import com.xk.template_service_as.entity.FieldToStringConverter;
 import com.xk.template_service_as.entity.FieldToStringConverterTest;
@@ -67,7 +68,7 @@ public class TemplateControllerTest {
 
     private String fields() {
         List<Field> fields = FieldToStringConverterTest.createSampleFields();
-        return fields.toString();
+        return fields.stream().map(Field::toDTO).toList().toString();
     }
 
 }

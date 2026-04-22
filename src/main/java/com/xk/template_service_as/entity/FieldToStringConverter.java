@@ -1,5 +1,6 @@
 package com.xk.template_service_as.entity;
 
+import com.xk.template_service_as.dto.FieldDTO;
 import com.xk.template_service_as.entity.fields.TextField;
 import com.xk.template_service_as.entity.util.FieldParser;
 import jakarta.persistence.AttributeConverter;
@@ -29,6 +30,32 @@ public class FieldToStringConverter implements AttributeConverter<List<Field>, S
 
     @Override
     public List<Field> convertToEntityAttribute(String s) {
-        return fieldParser.parseStringToListField(s);
+        return parseStringToListField(s);
+    }
+
+    public List<Field> parseStringToListField(String s) {
+        List<Field> fieldsList = new ArrayList<>();
+        JsonNode root =  objectMapper.readTree(s);
+
+        for (JsonNode child : root.asArray()) {
+            fieldsList.add(parseField(child));
+        }
+
+
+        return fieldsList;
+    }
+
+    private Field parseField(JsonNode field) {
+        String type = field.get("type").asString();
+
+        switch(type) {
+            case "TEXT":
+                return new TextField(
+                    field.get("fieldName").asString(),
+                    field.get("prompt").asString()
+                );
+        }
+
+        return null;
     }
 }

@@ -37,6 +37,7 @@ public class FieldToStringConverterTest {
         List<Field> fieldsList = new ArrayList<>();
         fieldsList.add(new TextField("stayGold", "Do you know Stay Gold?"));
         fieldsList.add(new TextField("inTheEnd", "Do you know Linkin Park?"));
+
         return fieldsList;
     }
 

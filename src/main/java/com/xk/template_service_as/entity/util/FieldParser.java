@@ -1,5 +1,6 @@
 package com.xk.template_service_as.entity.util;
 
+import com.xk.template_service_as.dto.FieldDTO;
 import com.xk.template_service_as.entity.Field;
 import com.xk.template_service_as.entity.FieldType;
 import com.xk.template_service_as.entity.fields.TextField;
@@ -19,30 +20,20 @@ public class FieldParser {
         this.objectMapper = objectMapper;
     }
 
-    public List<Field> parseStringToListField(String s) {
-        List<Field> fieldsList = new ArrayList<>();
+    public List<FieldDTO> parseStringToListFieldDTO(String s) {
+        List<FieldDTO> fieldsList = new ArrayList<>();
         JsonNode root =  objectMapper.readTree(s);
 
         for (JsonNode child : root.asArray()) {
-            fieldsList.add(parseField(child));
+            fieldsList.add(parseFieldDTO(child));
         }
 
 
         return fieldsList;
     }
 
-    private Field parseField(JsonNode field) {
-        FieldType type = FieldType.valueOf(field.get("type").stringValue());
-
-        switch (type) {
-            case TEXT:
-                return new TextField(
-                    field.get("fieldName").stringValue(),
-                    field.get("prompt").stringValue(),
-                    field.get("inputData").stringValue());
-        }
-
-        return null;
+    private FieldDTO parseFieldDTO(JsonNode fieldDTO) {
+        return objectMapper.readValue(fieldDTO.toString(), FieldDTO.class);
     }
 
 }
