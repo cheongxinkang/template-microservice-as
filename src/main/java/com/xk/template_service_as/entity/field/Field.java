@@ -1,10 +1,9 @@
-package com.xk.template_service_as.entity;
+package com.xk.template_service_as.entity.field;
 
 import com.xk.template_service_as.dto.FieldDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import tools.jackson.databind.ObjectMapper;
 
 @Data
 @AllArgsConstructor

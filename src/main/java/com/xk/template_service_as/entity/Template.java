@@ -1,5 +1,7 @@
 package com.xk.template_service_as.entity;
 
+import com.xk.template_service_as.entity.field.Field;
+import com.xk.template_service_as.entity.field.FieldAttributeConverter;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,7 +29,7 @@ public class Template {
     @Column
     private TemplateType type;
 
-    @Convert(converter = FieldToStringConverter.class)
+    @Convert(converter = FieldAttributeConverter.class)
     private List<Field> fields;
 
     @Column

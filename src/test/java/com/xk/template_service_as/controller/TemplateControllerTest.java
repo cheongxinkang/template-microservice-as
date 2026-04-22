@@ -1,7 +1,7 @@
 package com.xk.template_service_as.controller;
 
-import com.xk.template_service_as.entity.Field;
-import com.xk.template_service_as.entity.FieldToStringConverterTest;
+import com.xk.template_service_as.entity.field.Field;
+import com.xk.template_service_as.entity.FieldAttributeConverterTest;
 import com.xk.template_service_as.entity.TemplateType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -69,7 +69,7 @@ public class TemplateControllerTest {
     }
 
     private String fields() {
-        List<Field> fields = FieldToStringConverterTest.createSampleFields();
+        List<Field> fields = FieldAttributeConverterTest.createSampleFields();
         return fields.stream().map(Field::toDTO).toList().toString();
     }
 

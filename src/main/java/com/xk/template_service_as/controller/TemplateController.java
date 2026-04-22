@@ -2,26 +2,20 @@ package com.xk.template_service_as.controller;
 
 import com.xk.template_service_as.dto.TemplateDTO;
 import com.xk.template_service_as.entity.TemplateType;
-import com.xk.template_service_as.entity.fields.TextField;
 import com.xk.template_service_as.service.TemplateService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/templates")

@@ -1,7 +1,7 @@
 package com.xk.template_service_as.dto;
 
-import com.xk.template_service_as.entity.Field;
-import com.xk.template_service_as.entity.fields.TextField;
+import com.xk.template_service_as.entity.field.Field;
+import com.xk.template_service_as.entity.field.TextField;
 import lombok.*;
 import tools.jackson.databind.ObjectMapper;
 

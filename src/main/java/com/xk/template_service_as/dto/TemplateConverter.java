@@ -1,11 +1,8 @@
 package com.xk.template_service_as.dto;
 
-import com.xk.template_service_as.entity.Field;
-import com.xk.template_service_as.entity.FieldToStringConverter;
+import com.xk.template_service_as.entity.field.Field;
 import com.xk.template_service_as.entity.Template;
-import com.xk.template_service_as.entity.util.FieldParser;
 import org.springframework.stereotype.Service;
-import tools.jackson.databind.ObjectMapper;
 
 @Service
 public class TemplateConverter {

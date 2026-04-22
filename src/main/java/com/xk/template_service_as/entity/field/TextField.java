@@ -1,8 +1,6 @@
-package com.xk.template_service_as.entity.fields;
+package com.xk.template_service_as.entity.field;
 
 import com.xk.template_service_as.dto.FieldDTO;
-import com.xk.template_service_as.entity.Field;
-import com.xk.template_service_as.entity.FieldType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import tools.jackson.databind.ObjectMapper;

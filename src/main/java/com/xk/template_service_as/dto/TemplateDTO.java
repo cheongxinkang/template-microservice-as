@@ -1,9 +1,7 @@
 package com.xk.template_service_as.dto;
 
-import com.xk.template_service_as.entity.Field;
 import com.xk.template_service_as.entity.TemplateType;
 import jakarta.validation.constraints.FutureOrPresent;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.PastOrPresent;
 import lombok.*;
 

@@ -1,7 +1,9 @@
 package com.xk.template_service_as.entity;
 
-import com.xk.template_service_as.entity.fields.TextField;
-import com.xk.template_service_as.entity.util.FieldParser;
+import com.xk.template_service_as.entity.field.Field;
+import com.xk.template_service_as.entity.field.TextField;
+import com.xk.template_service_as.util.FieldsParser;
+import com.xk.template_service_as.entity.field.FieldAttributeConverter;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import tools.jackson.databind.ObjectMapper;
@@ -10,25 +12,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class FieldToStringConverterTest {
+public class FieldAttributeConverterTest {
 
     private final ObjectMapper objectMapper = new  ObjectMapper();
-    private final FieldParser fieldParser = new FieldParser(objectMapper);
-    private final FieldToStringConverter fieldToStringConverter = new FieldToStringConverter(objectMapper, fieldParser);
+    private final FieldsParser fieldsParser = new FieldsParser(objectMapper);
+    private final FieldAttributeConverter fieldAttributeConverter = new FieldAttributeConverter(fieldsParser);
 
 
     @Test
     void testConvertFieldsToString() {
         List<Field> fieldsList = createSampleFields();
 
-        String json = fieldToStringConverter.convertToDatabaseColumn(fieldsList);
+        String json = fieldAttributeConverter.convertToDatabaseColumn(fieldsList);
 
         Assertions.assertEquals(sampleFieldsJson(), json);
     }
 
     @Test
     void testConvertJsonToFields() {
-        List<Field> fieldsList = fieldToStringConverter.convertToEntityAttribute(sampleFieldsJson());
+        List<Field> fieldsList = fieldAttributeConverter.convertToEntityAttribute(sampleFieldsJson());
 
         Assertions.assertEquals(createSampleFields(), fieldsList);
     }
