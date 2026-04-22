@@ -6,7 +6,7 @@
 
 <div th:fragment="TEXT(field, index)">
     <label th:text="${field.label}"></label>
-    <input type="text" th:field="*{fields[__${index}__].prompt}" />
+    <input type="text" th:field="*{fields[__${index}__].textValue}" />
     <input type="hidden" th:field="*{fields[__${index}__].type}" value = "TEXT" />
 </div>
 
