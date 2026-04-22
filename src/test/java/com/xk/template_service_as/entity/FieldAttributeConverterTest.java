@@ -2,7 +2,7 @@ package com.xk.template_service_as.entity;
 
 import com.xk.template_service_as.entity.field.Field;
 import com.xk.template_service_as.entity.field.TextField;
-import com.xk.template_service_as.util.FieldsParser;
+import com.xk.template_service_as.service.FieldsParsingService;
 import com.xk.template_service_as.entity.field.FieldAttributeConverter;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -15,8 +15,8 @@ import java.util.List;
 public class FieldAttributeConverterTest {
 
     private final ObjectMapper objectMapper = new  ObjectMapper();
-    private final FieldsParser fieldsParser = new FieldsParser(objectMapper);
-    private final FieldAttributeConverter fieldAttributeConverter = new FieldAttributeConverter(fieldsParser);
+    private final FieldsParsingService fieldsParsingService = new FieldsParsingService(objectMapper);
+    private final FieldAttributeConverter fieldAttributeConverter = new FieldAttributeConverter(fieldsParsingService);
 
 
     @Test

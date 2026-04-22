@@ -1,27 +1,28 @@
-package com.xk.template_service_as.util;
+package com.xk.template_service_as.service;
 
 import com.xk.template_service_as.dto.FieldDTO;
 import com.xk.template_service_as.entity.field.Field;
 import com.xk.template_service_as.entity.field.TextField;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.ObjectMapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
-@Component
-public class FieldsParser {
+@Service
+public class FieldsParsingService {
 
     private ObjectMapper objectMapper;
 
-    public FieldsParser(ObjectMapper objectMapper) {
+    public FieldsParsingService(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
     }
 
     public String toJson(List<Field> fields) {
         try {
             return objectMapper.writeValueAsString(fields);
-        }  catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -38,7 +39,7 @@ public class FieldsParser {
     }
 
     private List<JsonNode> toJsonNodes(String s) {
-        JsonNode root =  objectMapper.readTree(s);
+        JsonNode root = objectMapper.readTree(s);
         return root.valueStream().toList();
     }
 
@@ -49,15 +50,45 @@ public class FieldsParser {
     private Field parseField(JsonNode field) {
         String type = field.get("type").asString();
 
-        switch(type) {
+        switch (type) {
             case "TEXT":
-                return new TextField(
-                    field.get("fieldName").asString(),
-                    field.get("prompt").asString()
-                );
+                return objectMapper.convertValue(field, TextField.class);
         }
 
         return null;
+    }
+
+    public List<Field> toFieldList(List<FieldDTO> fieldDTOList) {
+        List<Field> fields = new ArrayList<>();
+
+        for (FieldDTO fieldDTO : fieldDTOList) {
+            String type = fieldDTO.getType();
+
+            switch (type) {
+                case "TEXT":
+                    fields.add(objectMapper.convertValue(fieldDTO, TextField.class));
+                    break;
+            }
+        }
+
+        return fields;
+    }
+
+    public List<FieldDTO> toFieldDtoList(List<Field> fieldList) {
+        List<FieldDTO> fieldDTOS = new ArrayList<>();
+
+        for (Field field : fieldList) {
+            String type = field.getType().toString();
+
+            switch (type) {
+                case "TEXT":
+                    fieldDTOS.add(objectMapper.convertValue(field, FieldDTO.class));
+                    break;
+            }
+
+        }
+
+        return fieldDTOS;
     }
 
 }

@@ -1,32 +1,27 @@
 package com.xk.template_service_as.entity.field;
 
-import com.xk.template_service_as.dto.FieldDTO;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import tools.jackson.databind.ObjectMapper;
 
 @EqualsAndHashCode(callSuper = true)
-@Data
+@Getter
+@Setter
 public class TextField extends Field {
 
-    String prompt;
-
-    String inputData;
-
-    public TextField(String fieldName, String prompt) {
-        super("label", fieldName, FieldType.TEXT);
-        this.prompt = prompt;
-        this.inputData = "";
-    }
-
-    public TextField(String fieldName, String prompt, String inputData) {
-        super("label", fieldName, FieldType.TEXT);
-        this.prompt = prompt;
-        this.inputData = inputData;
-    }
+    String textValue;
 
     public TextField() {
-        super("label","", FieldType.TEXT);
+        this.type = FieldType.TEXT;
+    }
+
+    public TextField(String prompt, String variableName, String data) {
+        super(prompt, variableName, FieldType.TEXT);
+        this.textValue = data;
+    }
+
+    public TextField(String prompt, String variableName) {
+        super(prompt, variableName, FieldType.TEXT);
+        this.textValue = "";
     }
 
     @Override
@@ -35,12 +30,4 @@ public class TextField extends Field {
         return mapper.writeValueAsString(this);
     }
 
-    @Override
-    public FieldDTO toDTO() {
-        return FieldDTO.builder()
-            .label(this.label)
-            .type(this.type.toString())
-            .textValue(this.prompt)
-            .build();
-    }
 }

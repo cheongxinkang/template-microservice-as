@@ -13,16 +13,10 @@ import tools.jackson.databind.ObjectMapper;
 public class FieldDTO {
 
     private String type;
-    private String label;
+    private String prompt;
+    private String variableName;
     private String textValue;
     private String numberValue;
-
-    public Field toEntity() {
-        if ("TEXT".equalsIgnoreCase(type)) {
-            return new TextField(label, textValue);
-        }
-        throw new IllegalArgumentException("Unknown field type: " + type);
-    }
 
     @Override
     public String toString() {

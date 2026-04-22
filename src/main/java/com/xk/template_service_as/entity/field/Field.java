@@ -10,12 +10,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public abstract class Field {
 
-    protected String label;
+    protected String prompt;
 
-    protected String fieldName;
+    protected String variableName;
 
     protected FieldType type;
-
-    public abstract FieldDTO toDTO();
 
 }

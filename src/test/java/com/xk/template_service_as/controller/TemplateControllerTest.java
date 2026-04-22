@@ -1,5 +1,6 @@
 package com.xk.template_service_as.controller;
 
+import com.xk.template_service_as.dto.FieldDTO;
 import com.xk.template_service_as.entity.field.Field;
 import com.xk.template_service_as.entity.FieldAttributeConverterTest;
 import com.xk.template_service_as.entity.TemplateType;
@@ -12,6 +13,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import tools.jackson.databind.ObjectMapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasProperty;
@@ -24,12 +26,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class TemplateControllerTest {
 
     private final WebApplicationContext context;
-    private final ObjectMapper objectMapper;
 
     @Autowired
-    TemplateControllerTest(WebApplicationContext context, ObjectMapper objectMapper) {
+    TemplateControllerTest(WebApplicationContext context) {
         this.context = context;
-        this.objectMapper = objectMapper;
     }
 
     private MockMvc mockMvc;
@@ -50,8 +50,8 @@ public class TemplateControllerTest {
     @Test
     void testAddTextField() throws Exception {
         mockMvc.perform(
-            post("/templates/create")
-                .param("addTextField"))
+                post("/templates/create")
+                    .param("addTextField"))
             .andExpect(status().isOk())
             .andExpect(model().attributeExists("templateDTO"))
             .andExpect(model().attribute("templateDTO", hasProperty("fields", hasSize(1))))
@@ -64,13 +64,20 @@ public class TemplateControllerTest {
                 post("/templates/create")
                     .param("templateName", "Test Template")
                     .param("type", String.valueOf(TemplateType.FORM))
-                    .param("fields", fields()))
+                    .param("fields", fieldDTOs()))
             .andExpect(status().is3xxRedirection());
     }
 
-    private String fields() {
-        List<Field> fields = FieldAttributeConverterTest.createSampleFields();
-        return fields.stream().map(Field::toDTO).toList().toString();
+    private String fieldDTOs() {
+        List<FieldDTO> fieldDTOs = new ArrayList<>();
+
+        fieldDTOs.add(FieldDTO.builder()
+            .type("TEXT")
+            .prompt("This is a question.")
+            .variableName("testVar1")
+            .build());
+
+        return fieldDTOs.toString();
     }
 
 }
