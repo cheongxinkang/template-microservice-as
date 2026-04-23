@@ -5,9 +5,12 @@
 <body>
 
 <div th:fragment="TEXT(field, index)">
-    <label th:text="${field.label}"></label>
+    <label th:text="#{template.fields.fieldPrompt}">Write your prompt:</label>
+    <input type="text" th:field="*{fields[__${index}__].prompt}" />
+    <label th:text="#{template.fields.variablePrompt}">Variable tied to prompt:</label>
+    <input type="text" th:field="*{fields[__${index}__].variableName}" />
+    <label th:text="#{template.fields.placeholderText}">Placeholder Text:</label>
     <input type="text" th:field="*{fields[__${index}__].textValue}" />
-    <input type="hidden" th:field="*{fields[__${index}__].type}" value = "TEXT" />
 </div>
 
 <!--<div th:fragment="NUMBER(field, index)">-->

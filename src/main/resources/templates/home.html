@@ -34,7 +34,7 @@
 
             <div>
                 <label for="templateName">
-                    <span th:text="#{template.templateName}">Template Name</span>
+                    <span id="templateName" th:text="#{template.templateName}">Template Name</span>
                 </label>
                 <input type="text" th:field="*{templateName}" th:errorclass="fieldError"/>
             </div>
