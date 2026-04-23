@@ -1,24 +1,35 @@
 <!DOCTYPE html>
-
 <html xmlns:th="https://www.thymeleaf.org">
-
 <body>
 
 <div th:fragment="TEXT(field, index)">
-    <label th:text="#{template.fields.fieldPrompt}">Write your prompt:</label>
-    <input type="text" th:field="*{fields[__${index}__].prompt}" />
-    <label th:text="#{template.fields.variablePrompt}">Variable tied to prompt:</label>
-    <input type="text" th:field="*{fields[__${index}__].variableName}" />
-    <label th:text="#{template.fields.placeholderText}">Placeholder Text:</label>
-    <input type="text" th:field="*{fields[__${index}__].textValue}" />
+    <div class="field-item-header" style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            Text Field <span class="field-index" th:text="${#strings.toString(index) == '_INDEX_' ? '_INDEX_ADD_1' : index + 1}" style="margin-left: 6px; color: var(--text-muted); font-weight: normal; font-size: 0.9rem; letter-spacing: 0;"></span>
+        </div>
+        <button type="button" class="btn-delete" title="Remove Field">
+            <svg style="width:16px;height:16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+    </div>
+    <div class="field-inputs">
+        <div class="form-group full-width" style="margin-bottom: 0;">
+            <label th:text="#{template.fields.fieldPrompt}">Write your prompt:</label>
+            <input type="text" th:id="${'fields' + index + '.prompt'}" th:name="${'fields[' + index + '].prompt'}" th:value="${field != null ? field.prompt : ''}" placeholder="e.g. Enter your name" />
+        </div>
+        <div class="form-group" style="margin-bottom: 0;">
+            <label th:text="#{template.fields.variablePrompt}">Variable tied to prompt:</label>
+            <input type="text" th:id="${'fields' + index + '.variableName'}" th:name="${'fields[' + index + '].variableName'}" th:value="${field != null ? field.variableName : ''}" placeholder="e.g. userName" />
+        </div>
+        <div class="form-group" style="margin-bottom: 0;">
+            <label th:text="#{template.fields.placeholderText}">Placeholder Text:</label>
+            <input type="text" th:id="${'fields' + index + '.textValue'}" th:name="${'fields[' + index + '].textValue'}" th:value="${field != null ? field.textValue : ''}" placeholder="e.g. John Doe" />
+        </div>
+        <input type="hidden" th:id="${'fields' + index + '.type'}" th:name="${'fields[' + index + '].type'}" value="TEXT" />
+    </div>
 </div>
 
-<!--<div th:fragment="NUMBER(field, index)">-->
-<!--    <label th:text="${field.label}"></label>-->
-<!--    <input type="number" th:field="*{fields[__${index}__].numberValue}" />-->
-<!--    <input type="hidden" th:field="*{fields[__${index}__].type}" value="TEXT" />-->
-<!--</div>-->
-
 </body>
-
 </html>

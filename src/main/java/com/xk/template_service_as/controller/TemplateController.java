@@ -62,6 +62,7 @@ public class TemplateController {
 
         // save to repository
         redirectAttributes.addFlashAttribute("message", "New Template created.");
+
         return "redirect:/templates/" + templateDTO.getId();
     }
 
