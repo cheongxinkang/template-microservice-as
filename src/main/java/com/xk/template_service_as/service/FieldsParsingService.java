@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.ObjectMapper;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -30,12 +29,28 @@ public class FieldsParsingService {
 
     public List<FieldDTO> toFieldDTOList(String s) {
         List<JsonNode> fieldNodes = toJsonNodes(s);
-        return fieldNodes.stream().map(this::parseFieldDTO).toList();
+        return fieldNodes.stream()
+            .map(node -> (FieldDTO) parseTest(node, FieldDTO.class))
+            .toList();
     }
 
     public List<Field> toFieldList(String s) {
         List<JsonNode> fieldNodes = toJsonNodes(s);
-        return fieldNodes.stream().map(this::parseField).toList();
+        return fieldNodes.stream()
+            .map(node -> (Field) parseTest(node, Field.class))
+            .toList();
+    }
+
+    public List<Field> toFieldList(List<FieldDTO> fieldDTOList) {
+        return fieldDTOList.stream()
+            .map(fieldDTO -> (Field) parseTest(fieldDTO, Field.class))
+            .toList();
+    }
+
+    public List<FieldDTO> toFieldDtoList(List<Field> fieldList) {
+        return fieldList.stream()
+            .map(field -> (FieldDTO) parseTest(field, FieldDTO.class))
+            .toList();
     }
 
     private List<JsonNode> toJsonNodes(String s) {
@@ -43,52 +58,22 @@ public class FieldsParsingService {
         return root.valueStream().toList();
     }
 
-    private FieldDTO parseFieldDTO(JsonNode fieldDTO) {
-        return objectMapper.readValue(fieldDTO.toString(), FieldDTO.class);
-    }
-
-    private Field parseField(JsonNode field) {
-        String type = field.get("type").asString();
-
-        switch (type) {
-            case "TEXT":
-                return objectMapper.convertValue(field, TextField.class);
-        }
-
-        return null;
-    }
-
-    public List<Field> toFieldList(List<FieldDTO> fieldDTOList) {
-        List<Field> fields = new ArrayList<>();
-
-        for (FieldDTO fieldDTO : fieldDTOList) {
-            String type = fieldDTO.getType();
+    private Object parseTest(Object objectToBeParsed, Class c) {
+        if (c != FieldDTO.class) {
+            String type = "";
+            if (objectToBeParsed instanceof JsonNode) {
+                type = ((JsonNode) objectToBeParsed).get("type").asString();
+            } else if (objectToBeParsed instanceof FieldDTO) {
+                type = ((FieldDTO) objectToBeParsed).getType();
+            }
 
             switch (type) {
                 case "TEXT":
-                    fields.add(objectMapper.convertValue(fieldDTO, TextField.class));
-                    break;
+                    c = TextField.class;
             }
         }
 
-        return fields;
-    }
-
-    public List<FieldDTO> toFieldDtoList(List<Field> fieldList) {
-        List<FieldDTO> fieldDTOS = new ArrayList<>();
-
-        for (Field field : fieldList) {
-            String type = field.getType().toString();
-
-            switch (type) {
-                case "TEXT":
-                    fieldDTOS.add(objectMapper.convertValue(field, FieldDTO.class));
-                    break;
-            }
-
-        }
-
-        return fieldDTOS;
+        return objectMapper.convertValue(objectToBeParsed, c);
     }
 
 }
