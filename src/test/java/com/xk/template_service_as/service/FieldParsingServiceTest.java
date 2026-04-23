@@ -17,16 +17,24 @@ public class FieldParsingServiceTest {
 
     @Test
     void testToDTOListFromString() {
+        List<FieldDTO> fieldDTOs = fieldParsingService.toFieldDTOList(json());
+
+        Assertions.assertEquals(fieldDTOs().getFirst().getClass(), fieldDTOs.getFirst().getClass());
+        Assertions.assertEquals(fieldDTOs().toString(), fieldDTOs.toString());
     }
 
     @Test
     void testToEntityListFromString() {
+        List<Field> fields = fieldParsingService.toFieldList(json());
+
+        Assertions.assertEquals(fields(), fields);
     }
 
     @Test
     void testToDTOListFromEntityList() {
         List<FieldDTO> fieldDTOS = fieldParsingService.toFieldDtoList(fields());
 
+        Assertions.assertEquals(fieldDTOs().getFirst().getClass(), fieldDTOS.getFirst().getClass());
         Assertions.assertEquals(fieldDTOs().toString(), fieldDTOS.toString());
     }
 
@@ -45,7 +53,7 @@ public class FieldParsingServiceTest {
     }
 
     private String json() {
-        return "[{\"prompt\":\"This is a sample question.\",\"textData\":null,\"type\":\"TEXT\",\"variableName\":\"questionA\"}]";
+        return "[{\"prompt\":\"This is a sample question.\",\"textValue\":\"Answer X\",\"type\":\"TEXT\",\"variableName\":\"questionA\"}]";
     }
 
     private List<FieldDTO> fieldDTOs() {
