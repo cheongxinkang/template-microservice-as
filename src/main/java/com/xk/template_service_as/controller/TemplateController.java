@@ -1,9 +1,9 @@
 package com.xk.template_service_as.controller;
 
+import com.xk.template_service_as.dto.FieldRow;
 import com.xk.template_service_as.dto.TemplateDTO;
 import com.xk.template_service_as.entity.TemplateType;
 import com.xk.template_service_as.service.TemplateService;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -66,16 +66,10 @@ public class TemplateController {
         return "redirect:/templates/" + templateDTO.getId();
     }
 
-    @RequestMapping(value="/create", params={"addTextField"})
-    public String addTextField(TemplateDTO templateDTO, BindingResult result) {
-        templateService.addTextField(templateDTO);
-        return TEMPLATE_FORM;
-    }
-
-    @RequestMapping(value="/create", params={"removeField"})
-    public String removeField(TemplateDTO templateDTO, BindingResult result, HttpServletRequest req) {
-        Integer fieldId = Integer.valueOf(req.getParameter("removeField"));
-        templateDTO.getFields().remove(fieldId.intValue());
+    @PostMapping("/update-fields")
+    public String updateTemplateFields(@RequestBody FieldRow[] fieldRowArray, BindingResult result, RedirectAttributes redirectAttributes) {
+        System.out.println("Pause");
+//        TemplateDTO templateDTO = (TemplateDTO) model.getAttribute("templateDTO");
         return TEMPLATE_FORM;
     }
 
