@@ -63,6 +63,9 @@ public class TemplateServiceImpl implements TemplateService {
                 break;
             case "NUMERICAL":
                 fieldDTO.type(FieldType.NUMERICAL.toString());
+                break;
+            default:
+                throw new RuntimeException("Field type not supported.");
         }
 
         return fieldDTO.build();

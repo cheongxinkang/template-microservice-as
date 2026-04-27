@@ -52,7 +52,8 @@ public class TemplateControllerTest {
     void testAddFieldsToForm() throws Exception {
         FieldRow[] fieldRows = {
             new FieldRow(-1, "TEXT"),
-            new FieldRow(-1, "NUMERICAL")
+            new FieldRow(-1, "NUMERICAL"),
+            new FieldRow(-1, "DATE_TIME")
         };
 
         mockMvc.perform(
@@ -61,8 +62,19 @@ public class TemplateControllerTest {
                     .content(objectMapper.writeValueAsString(fieldRows)))
             .andExpect(status().isOk())
             .andExpect(model().attributeExists("templateDTO"))
-            .andExpect(model().attribute("templateDTO", hasProperty("fields", hasSize(2))))
+            .andExpect(model().attribute("templateDTO", hasProperty("fields", hasSize(3))))
             .andExpect(view().name("home"));
+    }
+
+    @Test
+    void testFailFieldAddition() throws Exception {
+        FieldRow[] fieldRows = { new FieldRow(-1, "ABCDEFGH")};
+
+        mockMvc.perform(
+            post("/templates/update-fields")
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(fieldRows)))
+            .andExpect(status().isBadRequest());
     }
 
     @Test
