@@ -1,7 +1,5 @@
 package com.xk.template_service_as.dto;
 
-import com.xk.template_service_as.entity.field.Field;
-import com.xk.template_service_as.entity.field.TextField;
 import lombok.*;
 import tools.jackson.databind.ObjectMapper;
 
@@ -17,6 +15,9 @@ public class FieldDTO {
     private String variableName;
     private String textValue;
     private String numberValue;
+    private String booleanValue;
+    private String dateTimeValue;
+    private String multipleChoiceListValues;
 
     @Override
     public String toString() {
