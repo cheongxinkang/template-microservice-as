@@ -44,7 +44,7 @@ public class FieldAttributeConverterTest {
     }
 
     public static String sampleFieldsJson() {
-        return "[{\"fieldName\":\"stayGold\",\"inputData\":\"\",\"prompt\":\"Do you know Stay Gold?\",\"type\":\"TEXT\"},{\"fieldName\":\"inTheEnd\",\"inputData\":\"\",\"prompt\":\"Do you know Linkin Park?\",\"type\":\"TEXT\"}]";
+        return "[{\"prompt\":\"stayGold\",\"textValue\":\"\",\"type\":\"TEXT\",\"variableName\":\"Do you know Stay Gold?\"},{\"prompt\":\"inTheEnd\",\"textValue\":\"\",\"type\":\"TEXT\",\"variableName\":\"Do you know Linkin Park?\"}]";
     }
 
 }

@@ -1,8 +1,7 @@
 package com.xk.template_service_as.controller;
 
 import com.xk.template_service_as.dto.FieldDTO;
-import com.xk.template_service_as.entity.field.Field;
-import com.xk.template_service_as.entity.FieldAttributeConverterTest;
+import com.xk.template_service_as.dto.FieldRow;
 import com.xk.template_service_as.entity.TemplateType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,10 +25,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class TemplateControllerTest {
 
     private final WebApplicationContext context;
+    private final ObjectMapper objectMapper;
 
     @Autowired
-    TemplateControllerTest(WebApplicationContext context) {
+    TemplateControllerTest(WebApplicationContext context, ObjectMapper objectMapper) {
         this.context = context;
+        this.objectMapper = objectMapper;
     }
 
     private MockMvc mockMvc;
@@ -48,13 +49,19 @@ public class TemplateControllerTest {
     }
 
     @Test
-    void testAddTextField() throws Exception {
+    void testAddFieldsToForm() throws Exception {
+        FieldRow[] fieldRows = {
+            new FieldRow(-1, "TEXT"),
+            new FieldRow(-1, "NUMERICAL")
+        };
+
         mockMvc.perform(
-                post("/templates/create")
-                    .param("addTextField"))
+                post("/templates/update-fields")
+                    .contentType("application/json")
+                    .content(objectMapper.writeValueAsString(fieldRows)))
             .andExpect(status().isOk())
             .andExpect(model().attributeExists("templateDTO"))
-            .andExpect(model().attribute("templateDTO", hasProperty("fields", hasSize(1))))
+            .andExpect(model().attribute("templateDTO", hasProperty("fields", hasSize(2))))
             .andExpect(view().name("home"));
     }
 
