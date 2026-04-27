@@ -31,6 +31,12 @@ public class TemplateController {
         return Arrays.asList(TemplateType.ALL);
     }
 
+    @ModelAttribute("templateDTO")
+    public TemplateDTO createBlankTemplate() {
+        return templateService.createEmptyTemplate();
+    }
+
+
     public TemplateController(
         @Qualifier("v1TemplateService") TemplateService templateService) {
         this.templateService = templateService;
@@ -41,17 +47,12 @@ public class TemplateController {
         dataBinder.setDisallowedFields("id", "createdAt", "modifiedAt");
     }
 
-    @ModelAttribute("templateDTO")
-    public TemplateDTO createBlankTemplate() {
-        return TemplateDTO.builder()
-            .fields(new ArrayList<>())
-            .build();
-    }
 
     @GetMapping("/create")
     public String getForm() {
         return TEMPLATE_FORM;
     }
+
 
     @PostMapping("/create")
     public String createTemplate(@Valid TemplateDTO templateDTO, BindingResult result, RedirectAttributes redirectAttributes) {
@@ -60,16 +61,16 @@ public class TemplateController {
             return TEMPLATE_FORM;
         }
 
-        // save to repository
+        templateDTO = templateService.saveTemplate(templateDTO);
         redirectAttributes.addFlashAttribute("message", "New Template created.");
 
         return "redirect:/templates/" + templateDTO.getId();
     }
 
+
     @PostMapping("/update-fields")
-    public String updateTemplateFields(@RequestBody FieldRow[] fieldRowArray, BindingResult result, RedirectAttributes redirectAttributes) {
-        System.out.println("Pause");
-//        TemplateDTO templateDTO = (TemplateDTO) model.getAttribute("templateDTO");
+    public String updateTemplateFields(@RequestBody FieldRow[] fieldRowArray, BindingResult result, TemplateDTO templateDTO) {
+        templateService.createOrReplaceFields(templateDTO, fieldRowArray);
         return TEMPLATE_FORM;
     }
 

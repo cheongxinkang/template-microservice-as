@@ -10,6 +10,10 @@ public class TextField extends Field {
 
     String textValue;
 
+    public TextField() {
+        super("", "", FieldType.TEXT);
+    }
+
     public TextField(String prompt, String variableName, String data) {
         super(prompt, variableName, FieldType.TEXT);
         this.textValue = data;
