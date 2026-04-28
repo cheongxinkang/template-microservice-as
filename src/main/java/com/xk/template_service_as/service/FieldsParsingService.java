@@ -70,6 +70,9 @@ public class FieldsParsingService {
             switch (type) {
                 case "TEXT":
                     c = TextField.class;
+                    break;
+                default:
+                    throw new RuntimeException("Field Type not supported.");
             }
         }
 

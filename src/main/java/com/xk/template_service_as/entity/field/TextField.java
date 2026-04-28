@@ -4,12 +4,11 @@ import lombok.*;
 import tools.jackson.databind.ObjectMapper;
 
 @EqualsAndHashCode(callSuper = true)
-@Getter
-@Setter
 public class TextField extends Field {
 
     String textValue;
 
+    // Empty constructor necessary for ObjectMapper
     public TextField() {
         super("", "", FieldType.TEXT);
     }
@@ -22,6 +21,14 @@ public class TextField extends Field {
     public TextField(String prompt, String variableName) {
         super(prompt, variableName, FieldType.TEXT);
         this.textValue = "";
+    }
+
+    public String getTextValue() {
+        return this.textValue;
+    }
+
+    public void setTextValue(String textValue) {
+        this.textValue = textValue;
     }
 
     @Override
