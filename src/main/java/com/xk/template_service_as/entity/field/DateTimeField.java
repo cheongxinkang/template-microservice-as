@@ -1,5 +1,6 @@
 package com.xk.template_service_as.entity.field;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.EqualsAndHashCode;
 import tools.jackson.databind.ObjectMapper;
 
@@ -8,6 +9,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = true)
 public class DateTimeField extends Field {
 
+    @JsonProperty("dateTimeValue")
     LocalDateTime dateTime;
 
     // Empty constructor necessary for ObjectMapper
