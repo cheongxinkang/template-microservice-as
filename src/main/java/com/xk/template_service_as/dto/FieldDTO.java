@@ -1,5 +1,6 @@
 package com.xk.template_service_as.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import tools.jackson.databind.ObjectMapper;
 

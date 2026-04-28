@@ -25,8 +25,8 @@ public class FieldParsingServiceTest {
         List<FieldDTO> fieldDTOs = fieldParsingService.toFieldDTOList(json());
 
         for (int i = 0; i < fieldDTOs.size(); i++) {
-            assertEquals(fieldDTOs().get(i).getClass(), fieldDTOs.getFirst().getClass());
-            assertEquals(fieldDTOs().get(i).toString(), fieldDTOs.toString());
+            assertEquals(fieldDTOs().get(i).getClass(), fieldDTOs.get(i).getClass());
+            assertEquals(fieldDTOs().get(i).toString(), fieldDTOs.get(i).toString());
         }
     }
 
@@ -42,8 +42,8 @@ public class FieldParsingServiceTest {
         List<FieldDTO> fieldDTOs = fieldParsingService.toFieldDtoList(fields());
 
         for (int i = 0; i < fieldDTOs.size(); i++) {
-            assertEquals(fieldDTOs().get(i).getClass(), fieldDTOs.getFirst().getClass());
-            assertEquals(fieldDTOs().get(i).toString(), fieldDTOs.toString());
+            assertEquals(fieldDTOs().get(i).getClass(), fieldDTOs.get(i).getClass());
+            assertEquals(fieldDTOs().get(i).toString(), fieldDTOs.get(i).toString());
         }
     }
 
@@ -62,7 +62,7 @@ public class FieldParsingServiceTest {
     }
 
     private String json() {
-        return "[{\"prompt\":\"This is a sample question.\",\"variableName\":\"questionA\",\"textValue\":\"Answer X\",\"type\":\"TEXT\"},{\"prompt\":\"This is a sample number.\",\"variableName\":\"numberA\",\"intValue\":5,\"realNumber\":5.0,\"type\":\"NUMERICAL\"},{\"prompt\":\"This is for date time.\",\"variableName\":\"dateTimeA\",\"dateTime\":\"2023-12-31T10:15:30\",\"type\":\"DATE_TIME\"}]";
+        return "[{\"prompt\":\"This is a sample question.\",\"variableName\":\"questionA\",\"textValue\":\"Answer X\",\"type\":\"TEXT\"},{\"prompt\":\"This is a sample number.\",\"variableName\":\"numberA\",\"numberValue\":5.0,\"type\":\"NUMERICAL\"},{\"prompt\":\"This is for date time.\",\"variableName\":\"dateTimeA\",\"dateTimeValue\":\"2023-12-31T10:15:30\",\"type\":\"DATE_TIME\"}]";
     }
 
 
@@ -80,7 +80,7 @@ public class FieldParsingServiceTest {
             .type("NUMERICAL")
             .variableName("numberA")
             .prompt("This is a sample number.")
-            .numberValue("5")
+            .numberValue("5.0")
             .build());
 
         fieldDTOs.add(FieldDTO.builder()
@@ -105,7 +105,7 @@ public class FieldParsingServiceTest {
         fields.add(new NumericalField(
             "This is a sample number.",
             "numberA",
-            5
+            5.0
         ));
 
         fields.add(new DateTimeField(

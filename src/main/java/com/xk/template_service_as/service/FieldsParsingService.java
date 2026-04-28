@@ -1,7 +1,9 @@
 package com.xk.template_service_as.service;
 
 import com.xk.template_service_as.dto.FieldDTO;
+import com.xk.template_service_as.entity.field.DateTimeField;
 import com.xk.template_service_as.entity.field.Field;
+import com.xk.template_service_as.entity.field.NumericalField;
 import com.xk.template_service_as.entity.field.TextField;
 import org.springframework.stereotype.Service;
 import tools.jackson.databind.JsonNode;
@@ -30,26 +32,26 @@ public class FieldsParsingService {
     public List<FieldDTO> toFieldDTOList(String s) {
         List<JsonNode> fieldNodes = toJsonNodes(s);
         return fieldNodes.stream()
-            .map(node -> (FieldDTO) parseTest(node, FieldDTO.class))
+            .map(node -> (FieldDTO) parseWithSelector(node, FieldDTO.class))
             .toList();
     }
 
     public List<Field> toFieldList(String s) {
         List<JsonNode> fieldNodes = toJsonNodes(s);
         return fieldNodes.stream()
-            .map(node -> (Field) parseTest(node, Field.class))
+            .map(node -> (Field) parseWithSelector(node, Field.class))
             .toList();
     }
 
     public List<Field> toFieldList(List<FieldDTO> fieldDTOList) {
         return fieldDTOList.stream()
-            .map(fieldDTO -> (Field) parseTest(fieldDTO, Field.class))
+            .map(fieldDTO -> (Field) parseWithSelector(fieldDTO, Field.class))
             .toList();
     }
 
     public List<FieldDTO> toFieldDtoList(List<Field> fieldList) {
         return fieldList.stream()
-            .map(field -> (FieldDTO) parseTest(field, FieldDTO.class))
+            .map(field -> (FieldDTO) parseWithSelector(field, FieldDTO.class))
             .toList();
     }
 
@@ -58,7 +60,7 @@ public class FieldsParsingService {
         return root.valueStream().toList();
     }
 
-    private Object parseTest(Object objectToBeParsed, Class c) {
+    private Object parseWithSelector(Object objectToBeParsed, Class c) {
         if (c != FieldDTO.class) {
             String type = "";
             if (objectToBeParsed instanceof JsonNode) {
@@ -70,6 +72,12 @@ public class FieldsParsingService {
             switch (type) {
                 case "TEXT":
                     c = TextField.class;
+                    break;
+                case "NUMERICAL":
+                    c = NumericalField.class;
+                    break;
+                case "DATE_TIME":
+                    c = DateTimeField.class;
                     break;
                 default:
                     throw new RuntimeException("Field Type not supported.");
