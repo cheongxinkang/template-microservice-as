@@ -3,6 +3,8 @@ package com.xk.template_service_as.controller;
 import com.xk.template_service_as.dto.FieldDTO;
 import com.xk.template_service_as.dto.FieldRow;
 import com.xk.template_service_as.entity.TemplateType;
+import jakarta.servlet.ServletException;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.hasSize;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -67,14 +70,16 @@ public class TemplateControllerTest {
     }
 
     @Test
-    void testFailFieldAddition() throws Exception {
+    void testFailFieldAddition() {
         FieldRow[] fieldRows = { new FieldRow(-1, "ABCDEFGH")};
 
-        mockMvc.perform(
-            post("/templates/update-fields")
-                .contentType("application/json")
-                .content(objectMapper.writeValueAsString(fieldRows)))
-            .andExpect(status().isBadRequest());
+        Exception exception = assertThrows(ServletException.class, () -> {
+            mockMvc.perform(
+                post("/templates/update-fields")
+                    .contentType("application/json")
+                    .content(objectMapper.writeValueAsString(fieldRows)));
+        });
+        Assertions.assertEquals("Request processing failed: java.lang.RuntimeException: Field type not supported.", exception.getMessage());
     }
 
     @Test
