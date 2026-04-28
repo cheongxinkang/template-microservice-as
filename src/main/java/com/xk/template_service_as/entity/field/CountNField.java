@@ -7,26 +7,26 @@ import lombok.Getter;
 import lombok.Setter;
 
 @EqualsAndHashCode(callSuper = true)
-public class NumericalField extends Field {
+public class CountNField extends Field {
 
     @JsonProperty("numberValue")
     @Getter
     @Setter
-    double realNumber;
+    int denominator;
 
-    // Empty constructor necessary for ObjectMapper
-    public NumericalField() {
-        super("", "", FieldType.NUMERICAL);
+    public CountNField() {
+        super("", "", FieldType.COUNT);
     }
 
     @JsonCreator
-    public NumericalField(
+    public CountNField(
         @JsonProperty("prompt") String prompt,
         @JsonProperty("variableName") String variableName,
-        @JsonProperty("numberValue") double data
+        @JsonProperty("numberValue") int data
     ) {
-        super(prompt, variableName, FieldType.NUMERICAL);
-        this.realNumber = data;
+        super(prompt, variableName, FieldType.COUNT);
+        this.denominator = data;
     }
+
 
 }

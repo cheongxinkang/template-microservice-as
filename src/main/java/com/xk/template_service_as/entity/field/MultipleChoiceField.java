@@ -6,27 +6,28 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-@EqualsAndHashCode(callSuper = true)
-public class NumericalField extends Field {
+import java.util.List;
 
-    @JsonProperty("numberValue")
+@EqualsAndHashCode(callSuper = true)
+public class MultipleChoiceField extends Field {
+
+    @JsonProperty("textValue")
     @Getter
     @Setter
-    double realNumber;
+    List<String> choices;
 
-    // Empty constructor necessary for ObjectMapper
-    public NumericalField() {
-        super("", "", FieldType.NUMERICAL);
+    public MultipleChoiceField() {
+        super("", "", FieldType.MULTIPLE_CHOICE);
     }
 
     @JsonCreator
-    public NumericalField(
+    public MultipleChoiceField(
         @JsonProperty("prompt") String prompt,
         @JsonProperty("variableName") String variableName,
-        @JsonProperty("numberValue") double data
+        @JsonProperty("textValue") String data
     ) {
-        super(prompt, variableName, FieldType.NUMERICAL);
-        this.realNumber = data;
+        super(prompt, variableName, FieldType.MULTIPLE_CHOICE);
+        // process data by delimiting it and creating list of string
     }
 
 }
