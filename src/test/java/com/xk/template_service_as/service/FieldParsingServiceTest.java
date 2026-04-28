@@ -1,14 +1,19 @@
 package com.xk.template_service_as.service;
 
 import com.xk.template_service_as.dto.FieldDTO;
+import com.xk.template_service_as.entity.field.DateTimeField;
 import com.xk.template_service_as.entity.field.Field;
+import com.xk.template_service_as.entity.field.NumericalField;
 import com.xk.template_service_as.entity.field.TextField;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import tools.jackson.databind.ObjectMapper;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FieldParsingServiceTest {
 
@@ -19,42 +24,47 @@ public class FieldParsingServiceTest {
     void testToDTOListFromString() {
         List<FieldDTO> fieldDTOs = fieldParsingService.toFieldDTOList(json());
 
-        Assertions.assertEquals(fieldDTOs().getFirst().getClass(), fieldDTOs.getFirst().getClass());
-        Assertions.assertEquals(fieldDTOs().toString(), fieldDTOs.toString());
+        for (int i = 0; i < fieldDTOs.size(); i++) {
+            assertEquals(fieldDTOs().get(i).getClass(), fieldDTOs.getFirst().getClass());
+            assertEquals(fieldDTOs().get(i).toString(), fieldDTOs.toString());
+        }
     }
 
     @Test
     void testToEntityListFromString() {
         List<Field> fields = fieldParsingService.toFieldList(json());
 
-        Assertions.assertEquals(fields(), fields);
+        assertEquals(fields(), fields);
     }
 
     @Test
     void testToDTOListFromEntityList() {
-        List<FieldDTO> fieldDTOS = fieldParsingService.toFieldDtoList(fields());
+        List<FieldDTO> fieldDTOs = fieldParsingService.toFieldDtoList(fields());
 
-        Assertions.assertEquals(fieldDTOs().getFirst().getClass(), fieldDTOS.getFirst().getClass());
-        Assertions.assertEquals(fieldDTOs().toString(), fieldDTOS.toString());
+        for (int i = 0; i < fieldDTOs.size(); i++) {
+            assertEquals(fieldDTOs().get(i).getClass(), fieldDTOs.getFirst().getClass());
+            assertEquals(fieldDTOs().get(i).toString(), fieldDTOs.toString());
+        }
     }
 
     @Test
     void testToEntityListFromDTOList() {
         List<Field> fields = fieldParsingService.toFieldList(fieldDTOs());
 
-        Assertions.assertEquals(fields(), fields);
+        assertEquals(fields(), fields);
     }
 
     @Test
     void testToJson() {
         String json = fieldParsingService.toJson(fields());
 
-        Assertions.assertEquals(json(), json);
+        assertEquals(json(), json);
     }
 
     private String json() {
-        return "[{\"prompt\":\"This is a sample question.\",\"textValue\":\"Answer X\",\"type\":\"TEXT\",\"variableName\":\"questionA\"}]";
+        return "[{\"prompt\":\"This is a sample question.\",\"variableName\":\"questionA\",\"textValue\":\"Answer X\",\"type\":\"TEXT\"},{\"prompt\":\"This is a sample number.\",\"variableName\":\"numberA\",\"intValue\":5,\"realNumber\":5.0,\"type\":\"NUMERICAL\"},{\"prompt\":\"This is for date time.\",\"variableName\":\"dateTimeA\",\"dateTime\":\"2023-12-31T10:15:30\",\"type\":\"DATE_TIME\"}]";
     }
+
 
     private List<FieldDTO> fieldDTOs() {
         List<FieldDTO> fieldDTOs = new ArrayList<>();
@@ -64,6 +74,20 @@ public class FieldParsingServiceTest {
             .variableName("questionA")
             .prompt("This is a sample question.")
             .textValue("Answer X")
+            .build());
+
+        fieldDTOs.add(FieldDTO.builder()
+            .type("NUMERICAL")
+            .variableName("numberA")
+            .prompt("This is a sample number.")
+            .numberValue("5")
+            .build());
+
+        fieldDTOs.add(FieldDTO.builder()
+            .type("DATE_TIME")
+            .variableName("dateTimeA")
+            .prompt("This is for date time.")
+            .dateTimeValue(LocalDateTime.parse("2023-12-31T10:15:30").toString())
             .build());
 
         return fieldDTOs;
@@ -76,6 +100,18 @@ public class FieldParsingServiceTest {
             "This is a sample question.",
             "questionA",
             "Answer X"
+        ));
+
+        fields.add(new NumericalField(
+            "This is a sample number.",
+            "numberA",
+            5
+        ));
+
+        fields.add(new DateTimeField(
+            "This is for date time.",
+            "dateTimeA",
+            LocalDateTime.parse("2023-12-31T10:15:30")
         ));
 
         return fields;

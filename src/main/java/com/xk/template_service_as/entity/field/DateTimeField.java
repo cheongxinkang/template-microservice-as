@@ -15,6 +15,11 @@ public class DateTimeField extends Field {
         super("", "", FieldType.DATE_TIME);
     }
 
+    public DateTimeField(String prompt, String variableName, LocalDateTime data) {
+        super(prompt, variableName, FieldType.DATE_TIME);
+        this.dateTime = data;
+    }
+
     public LocalDateTime getDateTime() {
         return this.dateTime;
     }

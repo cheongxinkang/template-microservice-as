@@ -13,6 +13,11 @@ public class NumericalField extends Field {
         super("", "", FieldType.NUMERICAL);
     }
 
+    public NumericalField(String prompt, String variableName, double data) {
+        super(prompt, variableName, FieldType.NUMERICAL);
+        this.realNumber = data;
+    }
+
     public int getIntValue() {
         return (int) realNumber;
     }

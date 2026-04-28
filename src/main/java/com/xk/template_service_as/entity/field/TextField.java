@@ -18,11 +18,6 @@ public class TextField extends Field {
         this.textValue = data;
     }
 
-    public TextField(String prompt, String variableName) {
-        super(prompt, variableName, FieldType.TEXT);
-        this.textValue = "";
-    }
-
     public String getTextValue() {
         return this.textValue;
     }

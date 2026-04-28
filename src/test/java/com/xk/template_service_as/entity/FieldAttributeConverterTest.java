@@ -37,14 +37,14 @@ public class FieldAttributeConverterTest {
 
     public static List<Field> createSampleFields() {
         List<Field> fieldsList = new ArrayList<>();
-        fieldsList.add(new TextField("stayGold", "Do you know Stay Gold?"));
-        fieldsList.add(new TextField("inTheEnd", "Do you know Linkin Park?"));
+        fieldsList.add(new TextField("stayGold", "Do you know Stay Gold?", ""));
+        fieldsList.add(new TextField("inTheEnd", "Do you know Linkin Park?", ""));
 
         return fieldsList;
     }
 
     public static String sampleFieldsJson() {
-        return "[{\"prompt\":\"stayGold\",\"textValue\":\"\",\"type\":\"TEXT\",\"variableName\":\"Do you know Stay Gold?\"},{\"prompt\":\"inTheEnd\",\"textValue\":\"\",\"type\":\"TEXT\",\"variableName\":\"Do you know Linkin Park?\"}]";
+        return "[{\"prompt\":\"stayGold\",\"variableName\":\"Do you know Stay Gold?\",\"textValue\":\"\",\"type\":\"TEXT\"},{\"prompt\":\"inTheEnd\",\"variableName\":\"Do you know Linkin Park?\",\"textValue\":\"\",\"type\":\"TEXT\"}]";
     }
 
 }
