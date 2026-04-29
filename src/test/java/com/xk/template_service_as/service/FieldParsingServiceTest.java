@@ -1,10 +1,7 @@
 package com.xk.template_service_as.service;
 
 import com.xk.template_service_as.dto.FieldDTO;
-import com.xk.template_service_as.entity.field.DateTimeField;
-import com.xk.template_service_as.entity.field.Field;
-import com.xk.template_service_as.entity.field.NumericalField;
-import com.xk.template_service_as.entity.field.TextField;
+import com.xk.template_service_as.entity.field.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import tools.jackson.databind.ObjectMapper;
@@ -62,7 +59,7 @@ public class FieldParsingServiceTest {
     }
 
     private String json() {
-        return "[{\"prompt\":\"This is a sample question.\",\"variableName\":\"questionA\",\"textValue\":\"Answer X\",\"type\":\"TEXT\"},{\"prompt\":\"This is a sample number.\",\"variableName\":\"numberA\",\"numberValue\":5.0,\"type\":\"NUMERICAL\"},{\"prompt\":\"This is for date time.\",\"variableName\":\"dateTimeA\",\"dateTimeValue\":\"2023-12-31T10:15:30\",\"type\":\"DATE_TIME\"}]";
+        return "[{\"prompt\":\"This is a sample question.\",\"variableName\":\"questionA\",\"textValue\":\"Answer X\",\"type\":\"TEXT\"},{\"prompt\":\"This is a sample number.\",\"variableName\":\"numberA\",\"numberValue\":5.0,\"type\":\"NUMERICAL\"},{\"prompt\":\"This is for date time.\",\"variableName\":\"dateTimeA\",\"dateTimeValue\":\"2023-12-31T10:15:30\",\"type\":\"DATE_TIME\"},{\"prompt\":\"This is a multiple choice question.\",\"variableName\":\"multipleChoiceB\",\"textValue\":null,\"type\":\"MULTIPLE_CHOICE\"},{\"prompt\":\"Are you checking this?\",\"variableName\":\"checkBoxC\",\"booleanValue\":true,\"checked\":true,\"type\":\"CHECKBOX\"},{\"prompt\":\"How many skips can you do?\",\"variableName\":\"timesDone\",\"numberValue\":9,\"type\":\"COUNT\"},{\"prompt\":\"When must this be done?\",\"variableName\":\"DeadlineA\",\"dateTimeValue\":\"2023-12-31T10:15:30\",\"type\":\"DEADLINE\"}]";
     }
 
 
@@ -87,7 +84,35 @@ public class FieldParsingServiceTest {
             .type("DATE_TIME")
             .variableName("dateTimeA")
             .prompt("This is for date time.")
-            .dateTimeValue(LocalDateTime.parse("2023-12-31T10:15:30").toString())
+            .dateTimeValue("2023-12-31T10:15:30")
+            .build());
+
+        fieldDTOs.add(FieldDTO.builder()
+            .type("MULTIPLE_CHOICE")
+            .variableName("multipleChoiceB")
+            .prompt("This is a multiple choice question.")
+            .textValue("Option A, Option B")
+            .build());
+
+        fieldDTOs.add(FieldDTO.builder()
+                .type("CHECKBOX")
+                .variableName("checkBoxC")
+                .prompt("Are you checking this?")
+                .booleanValue("true")
+            .build());
+
+        fieldDTOs.add(FieldDTO.builder()
+                .type("COUNT")
+                .variableName("timesDone")
+                .prompt("How many skips can you do?")
+                .numberValue("9")
+            .build());
+
+        fieldDTOs.add(FieldDTO.builder()
+            .type("DEADLINE")
+                .variableName("DeadlineA")
+                .prompt("When must this be done?")
+                .dateTimeValue("2023-12-31T10:15:30")
             .build());
 
         return fieldDTOs;
@@ -111,6 +136,30 @@ public class FieldParsingServiceTest {
         fields.add(new DateTimeField(
             "This is for date time.",
             "dateTimeA",
+            LocalDateTime.parse("2023-12-31T10:15:30")
+        ));
+
+        fields.add(new MultipleChoiceField(
+            "This is a multiple choice question.",
+            "multipleChoiceB",
+            "Option A, Option B"
+        ));
+
+        fields.add(new CheckBoxField(
+            "Are you checking this?",
+            "checkBoxC",
+            true
+        ));
+
+        fields.add(new CountNField(
+            "How many skips can you do?",
+            "timesDone",
+            9
+        ));
+
+        fields.add(new DeadlineField(
+            "When must this be done?",
+            "DeadlineA",
             LocalDateTime.parse("2023-12-31T10:15:30")
         ));
 
