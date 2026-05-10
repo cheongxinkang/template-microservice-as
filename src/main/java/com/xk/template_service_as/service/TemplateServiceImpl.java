@@ -30,14 +30,24 @@ public class TemplateServiceImpl implements TemplateService {
     @Override
     public TemplateDTO createEmptyTemplate() {
         return TemplateDTO.builder()
-            .fields(new ArrayList<>())
-            .build();
+                .fields(new ArrayList<>())
+                .build();
     }
 
     @Override
     public TemplateDTO saveTemplate(TemplateDTO templateDTO) {
         Template savedTemplate = templateRepository.save(templateConverter.toEntity(templateDTO));
         return templateConverter.toDTO(savedTemplate);
+    }
+
+    @Override
+    public List<TemplateDTO> getAllTemplates() {
+        return templateRepository.findAll().stream().map(templateConverter::toDTO).toList();
+    }
+
+    @Override
+    public TemplateDTO getTemplateById(java.util.UUID id) {
+        return templateRepository.findById(id).map(templateConverter::toDTO).orElse(null);
     }
 
     @Override
